@@ -1,0 +1,22 @@
+
+def turn_right():
+    turn_left()
+    turn_left()
+    turn_left()
+
+
+def running_jump(times):
+    for i in range(times):
+        move()
+        turn_left()
+        move()
+        turn_right()
+        move()
+        turn_right()
+        move()
+        # no need for a turn after the last hurdle
+        if i < times - 1:
+            turn_left()
+
+
+running_jump(6)
