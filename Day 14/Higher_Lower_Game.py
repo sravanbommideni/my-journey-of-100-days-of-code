@@ -1,5 +1,4 @@
 import random
-from projects.data import data
 
 account_b=random.choice(data)
 game_should_continue=True
