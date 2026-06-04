@@ -3,7 +3,7 @@ from turtle import Turtle,Screen
 screen = Screen()
 
 END = 260
-MOVE = 20
+MOVE = 10
 
 class Paddle(Turtle):
     def __init__(self,xcoordinate,ycoordinate):

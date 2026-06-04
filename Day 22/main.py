@@ -2,6 +2,7 @@ from turtle import Screen
 from paddle import Paddle
 from ball import Ball
 import time
+from scoreboard import ScoreBoard
 
 #create screen
 screen = Screen()
@@ -10,8 +11,13 @@ screen.setup(width=800,height=600)
 screen.title("Pong game")
 screen.listen()
 
+
+user_1_score = ScoreBoard(alignment="Right",position=(200,280))
+user_2_score = ScoreBoard(alignment="Left",position=(-200,280))
+
 user_1=Paddle(370,0)
 user_2=Paddle(xcoordinate=-380,ycoordinate=0)
+
 ball = Ball()
 
 screen.onkeypress(user_1.up,"Up")
@@ -21,7 +27,28 @@ screen.onkeypress(user_2.down,"s")
 
 game_over = False
 while not game_over:
-    time.sleep(0.1)
+    time.sleep(ball.move_speed)
     ball.move()
+
+    if ball.is_hit_top_or_bottom():
+        ball.bounce_back_y()
+
+    if ball.distance(user_1) < 50 and ball.xcor() > 350:
+        ball.bounce_back_x()
+        new_pos = (ball.xcor() - 20, ball.ycor() + ball.ymove)
+        ball.setpos(new_pos)
+
+    if ball.distance(user_2) < 50 and ball.xcor() < -350:
+        ball.bounce_back_x()
+        new_pos = (ball.xcor() + 20, ball.ycor() + ball.ymove)
+        ball.setpos(new_pos)
+
+    if ball.xcor() > 400:
+        ball.restart()
+        user_2_score.increase_score()
+
+    if ball.xcor() < -400:
+        ball.restart()
+        user_1_score.increase_score()
 
 screen.exitonclick()
